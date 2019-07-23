@@ -5,40 +5,31 @@ class operation extends CI_Model {
         parent::__construct();
     }
     
-    public function userRegistration($payload){
-        $res = $this->db->insert('user_details',$payload);
-        if($res){
-            return 1;
-        }else{
-            return 0 ;
-        }
+    public function commonInsert($tableName,$data){
+        $res = $this->db->insert($tableName,$data);
+        return $res;
+        
     }
     
-    public function userLogin($email,$password,$payload){
-        $res = $this->db->where($email,$payload['uemail'])->where($password,$payload['upassword'])->get('user_details')->row();  
-        //print_r($res);exit;
-        if($res){
-            return $res;
+    public function commonGet($filter,$tableName,$type){
+        if($type == "single"){
+            $res = $this->db->where($filter)->get($tableName)->row(); 
         }else{
-            return 0 ;
+            $res = $this->db->get($tableName)->result(); 
         }
+        return $res; 
+       
     }
     
-    public function userUpdateDetails($filter,$id,$payload){
-        $res = $this->db->where($filter,$id)->update('user_details',$payload);    
-        if($res){
-            return 1;
-        }else{
-            return 0 ;
-        }
+    public function commonUpdate($filter,$set,$tableName){
+        $res = $this->db->where($filter)->update($tableName,$set);
+        return $res; 
+       
     }
     
-    public function userDelete($filter,$id){
-        $res = $this->db->where($filter,$id)->delete('user_details');    
-        if($res){
-            return 1;
-        }else{
-            return 0 ;
-        }
+    public function commonDelete($filter,$tableName){
+        $res = $this->db->where($filter)->delete($tableName);
+        return $res;
+        
     }
 }
