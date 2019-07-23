@@ -55,7 +55,6 @@
 
     </body>
 </html>
-
 <script>
   
 $("#userForm").on('submit',(function(e){
@@ -69,12 +68,13 @@ $("#userForm").on('submit',(function(e){
        contentType:false,
        processData:false,
        success:function(response){
+           console.log(response);
            if(response == 1){
                alert('Details are saved sucessfully');
                window.location.href = "<?=  base_url("index.php/user/login_page")?>";
            }else{
-              alert('Registration failed');
-               window.location.reload(); 
+              alert(response);
+              // window.location.reload(); 
            }
        }
     });
